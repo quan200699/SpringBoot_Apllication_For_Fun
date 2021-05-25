@@ -1,5 +1,6 @@
 package com.example.startup.controller;
 
+import com.example.startup.exception.UsernameUniqueException;
 import com.example.startup.model.dto.DebtorDto;
 import com.example.startup.model.entity.Debtor;
 import com.example.startup.service.debtor.IDebtorService;
@@ -46,7 +47,11 @@ public class DebtorController {
     }
 
     @PostMapping
-    public ResponseEntity<Debtor> createNewDebtor(@Valid @RequestBody DebtorDto debtorDto) {
+    public ResponseEntity<Debtor> createNewDebtor(@Valid @RequestBody DebtorDto debtorDto) throws UsernameUniqueException {
+        Optional<Debtor> debtorOptional = debtorService.findByUsername(debtorDto.getUsername());
+        if (debtorOptional.isPresent()) {
+            throw new UsernameUniqueException();
+        }
         Debtor debtor = convertToEntity(debtorDto);
         debtor.setPassword(passwordEncoder.encode(debtor.getPassword()));
         return new ResponseEntity<>(debtorService.save(debtor), HttpStatus.CREATED);
@@ -87,6 +92,14 @@ public class DebtorController {
             String errorMessage = error.getDefaultMessage();
             errors.put(fieldName, errorMessage);
         });
+        return errors;
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(UsernameUniqueException.class)
+    public Map<String, String> handleUsernameUniqueException() {
+        Map<String, String> errors = new HashMap<>();
+        errors.put("error","username đã tồn tại");
         return errors;
     }
 
