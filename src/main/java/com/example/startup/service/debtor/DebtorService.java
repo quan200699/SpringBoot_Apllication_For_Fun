@@ -45,4 +45,9 @@ public class DebtorService implements IDebtorService {
     public Optional<Debtor> findByUsername(String username) {
         return debtorRepository.findByUsername(username);
     }
+
+    @Override
+    public Optional<Debtor> findByEmail(String email) {
+        return debtorRepository.findByEmail(email);
+    }
 }

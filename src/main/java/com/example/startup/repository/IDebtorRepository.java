@@ -7,4 +7,5 @@ import java.util.Optional;
 
 public interface IDebtorRepository extends JpaRepository<Debtor, Long> {
     Optional<Debtor> findByUsername(String username);
+    Optional<Debtor> findByEmail(String email);
 }

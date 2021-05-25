@@ -1,5 +1,6 @@
 package com.example.startup.controller;
 
+import com.example.startup.exception.EmailUniqueException;
 import com.example.startup.exception.UsernameUniqueException;
 import com.example.startup.model.dto.DebtorDto;
 import com.example.startup.model.entity.Debtor;
@@ -47,10 +48,14 @@ public class DebtorController {
     }
 
     @PostMapping
-    public ResponseEntity<Debtor> createNewDebtor(@Valid @RequestBody DebtorDto debtorDto) throws UsernameUniqueException {
+    public ResponseEntity<Debtor> createNewDebtor(@Valid @RequestBody DebtorDto debtorDto) throws UsernameUniqueException, EmailUniqueException {
         Optional<Debtor> debtorOptional = debtorService.findByUsername(debtorDto.getUsername());
         if (debtorOptional.isPresent()) {
             throw new UsernameUniqueException();
+        }
+        debtorOptional = debtorService.findByEmail(debtorDto.getEmail());
+        if (debtorOptional.isPresent()) {
+            throw new EmailUniqueException();
         }
         Debtor debtor = convertToEntity(debtorDto);
         debtor.setPassword(passwordEncoder.encode(debtor.getPassword()));
@@ -99,7 +104,15 @@ public class DebtorController {
     @ExceptionHandler(UsernameUniqueException.class)
     public Map<String, String> handleUsernameUniqueException() {
         Map<String, String> errors = new HashMap<>();
-        errors.put("error","username đã tồn tại");
+        errors.put("error", "username đã tồn tại");
+        return errors;
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(EmailUniqueException.class)
+    public Map<String, String> handleEmailUniqueException() {
+        Map<String, String> errors = new HashMap<>();
+        errors.put("error", "email đã tồn tại");
         return errors;
     }
 
