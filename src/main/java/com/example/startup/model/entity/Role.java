@@ -8,23 +8,13 @@ import javax.persistence.*;
 
 @Entity
 @Data
-@NoArgsConstructor
+@Table(name = "roles")
 @AllArgsConstructor
-public class Debtor {
+@NoArgsConstructor
+public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
-
-    private String address;
-
-    private String phone;
-
-    private String hobbies;
-
-    private String avatar;
-
-    @OneToOne
-    private User user;
 }

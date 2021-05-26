@@ -9,15 +9,10 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -30,9 +25,6 @@ public class DebtorController {
 
     @Autowired
     private ModelMapper modelMapper;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
     @GetMapping
     public ResponseEntity<List<DebtorDto>> getAllDebtors(@RequestParam int page, @RequestParam int size) {
@@ -49,16 +41,7 @@ public class DebtorController {
 
     @PostMapping
     public ResponseEntity<Debtor> createNewDebtor(@Valid @RequestBody DebtorDto debtorDto) throws UsernameUniqueException, EmailUniqueException {
-        Optional<Debtor> debtorOptional = debtorService.findByUsername(debtorDto.getUsername());
-        if (debtorOptional.isPresent()) {
-            throw new UsernameUniqueException();
-        }
-        debtorOptional = debtorService.findByEmail(debtorDto.getEmail());
-        if (debtorOptional.isPresent()) {
-            throw new EmailUniqueException();
-        }
         Debtor debtor = convertToEntity(debtorDto);
-        debtor.setPassword(passwordEncoder.encode(debtor.getPassword()));
         return new ResponseEntity<>(debtorService.save(debtor), HttpStatus.CREATED);
     }
 
@@ -85,35 +68,6 @@ public class DebtorController {
             debtorService.remove(id);
             return new ResponseEntity<>(convertToDto(debtor), HttpStatus.OK);
         }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
-    }
-
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public Map<String, String> handleValidationExceptions(
-            MethodArgumentNotValidException ex) {
-        Map<String, String> errors = new HashMap<>();
-        ex.getBindingResult().getAllErrors().forEach((error) -> {
-            String fieldName = ((FieldError) error).getField();
-            String errorMessage = error.getDefaultMessage();
-            errors.put(fieldName, errorMessage);
-        });
-        return errors;
-    }
-
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(UsernameUniqueException.class)
-    public Map<String, String> handleUsernameUniqueException() {
-        Map<String, String> errors = new HashMap<>();
-        errors.put("error", "username đã tồn tại");
-        return errors;
-    }
-
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(EmailUniqueException.class)
-    public Map<String, String> handleEmailUniqueException() {
-        Map<String, String> errors = new HashMap<>();
-        errors.put("error", "email đã tồn tại");
-        return errors;
     }
 
     private DebtorDto convertToDto(Debtor debtor) {

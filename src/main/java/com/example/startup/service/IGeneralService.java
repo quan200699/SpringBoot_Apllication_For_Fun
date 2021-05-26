@@ -1,5 +1,7 @@
 package com.example.startup.service;
 
+import com.example.startup.model.entity.Debtor;
+
 import java.util.Optional;
 
 public interface IGeneralService<T> {
@@ -10,4 +12,6 @@ public interface IGeneralService<T> {
     T save(T t);
 
     void remove(Long id);
+
+    Iterable<T> findAll(int page, int size);
 }

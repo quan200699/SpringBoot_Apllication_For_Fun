@@ -40,14 +40,4 @@ public class DebtorService implements IDebtorService {
         Page<Debtor> debtors = debtorRepository.findAll(pageRequest);
         return debtors.getContent();
     }
-
-    @Override
-    public Optional<Debtor> findByUsername(String username) {
-        return debtorRepository.findByUsername(username);
-    }
-
-    @Override
-    public Optional<Debtor> findByEmail(String email) {
-        return debtorRepository.findByEmail(email);
-    }
 }
