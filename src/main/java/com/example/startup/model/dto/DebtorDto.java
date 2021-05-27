@@ -1,5 +1,6 @@
 package com.example.startup.model.dto;
 
+import com.example.startup.model.entity.Loyalty;
 import com.example.startup.model.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -29,4 +30,6 @@ public class DebtorDto {
     private String avatar;
 
     private User user;
+
+    private Loyalty loyalty;
 }

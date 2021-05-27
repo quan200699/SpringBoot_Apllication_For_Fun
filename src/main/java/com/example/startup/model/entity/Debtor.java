@@ -27,4 +27,7 @@ public class Debtor {
 
     @OneToOne
     private User user;
+
+    @ManyToOne
+    private Loyalty loyalty;
 }
