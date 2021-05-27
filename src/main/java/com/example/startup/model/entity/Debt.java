@@ -14,6 +14,10 @@ public class Debt {
 
     private Date createdDate;
 
+    private Date confirmedDate;
+
+    private boolean status;
+
     @ManyToOne
     private Debtor debtor;
 

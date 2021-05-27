@@ -11,9 +11,9 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class DebtDto {
+public class DeptConfirmDto {
     @NotNull
-    private Date createdDate;
+    private Date confirmedDate;
 
     @NotNull
     private Debtor debtor;
