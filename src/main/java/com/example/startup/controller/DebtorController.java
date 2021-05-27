@@ -40,9 +40,10 @@ public class DebtorController {
     }
 
     @PostMapping
-    public ResponseEntity<Debtor> createNewDebtor(@Valid @RequestBody DebtorDto debtorDto) throws UsernameUniqueException, EmailUniqueException {
+    public ResponseEntity<DebtorDto> createNewDebtor(@Valid @RequestBody DebtorDto debtorDto) {
         Debtor debtor = convertToEntity(debtorDto);
-        return new ResponseEntity<>(debtorService.save(debtor), HttpStatus.CREATED);
+        debtorService.save(debtor);
+        return new ResponseEntity<>(debtorDto, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
