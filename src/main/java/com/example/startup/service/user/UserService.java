@@ -1,5 +1,6 @@
 package com.example.startup.service.user;
 
+import com.example.startup.model.dto.UserPrinciple;
 import com.example.startup.model.entity.User;
 import com.example.startup.repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,16 +46,20 @@ public class UserService implements IUserService {
 
     @Override
     public Optional<User> findByUsername(String username) {
-        return Optional.empty();
+        return userRepository.findByUsername(username);
     }
 
     @Override
     public Optional<User> findByEmail(String email) {
-        return Optional.empty();
+        return userRepository.findByEmail(email);
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return null;
+        Optional<User> userOptional = userRepository.findByEmail(username);
+        if (!userOptional.isPresent()) {
+            throw new UsernameNotFoundException(username);
+        }
+        return UserPrinciple.build(userOptional.get());
     }
 }
