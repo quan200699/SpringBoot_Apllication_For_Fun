@@ -10,6 +10,7 @@ import com.example.startup.service.role.IRoleService;
 import com.example.startup.service.user.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.annotation.PostConstruct;
 import java.util.HashSet;
@@ -27,6 +28,8 @@ public class InitData {
     @Autowired
     private ILoyaltyService loyaltyService;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @PostConstruct
     public void init() {
@@ -55,8 +58,8 @@ public class InitData {
             User admin = new User();
             Set<Role> roles = new HashSet<>();
             roles.add(new Role(1L, RoleName.ROLE_ADMIN.toString()));
-            admin.setUsername("admin");
-            admin.setPassword("123456");
+            admin.setUsername("admin1");
+            admin.setPassword(passwordEncoder.encode("123456"));
             admin.setRoles(roles);
             userService.save(admin);
         }

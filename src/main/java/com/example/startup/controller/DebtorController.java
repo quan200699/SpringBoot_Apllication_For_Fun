@@ -1,8 +1,7 @@
 package com.example.startup.controller;
 
-import com.example.startup.exception.EmailUniqueException;
-import com.example.startup.exception.UsernameUniqueException;
 import com.example.startup.model.dto.DebtorDto;
+import com.example.startup.model.dto.DebtorPaginationDTO;
 import com.example.startup.model.entity.Debtor;
 import com.example.startup.service.debtor.IDebtorService;
 import org.modelmapper.ModelMapper;
@@ -27,10 +26,11 @@ public class DebtorController {
     private ModelMapper modelMapper;
 
     @GetMapping
-    public ResponseEntity<List<DebtorDto>> getAllDebtors(@RequestParam int page, @RequestParam int size) {
+    public ResponseEntity<DebtorPaginationDTO> getAllDebtors(@RequestParam int page, @RequestParam int size) {
         List<Debtor> debtors = (List<Debtor>) debtorService.findAll(page, size);
         List<DebtorDto> debtorDtoList = debtors.stream().map(this::convertToDto).collect(Collectors.toList());
-        return new ResponseEntity<>(debtorDtoList, HttpStatus.OK);
+        int length = ((List<Debtor>) debtorService.findAll()).size();
+        return new ResponseEntity<>(new DebtorPaginationDTO(debtorDtoList, length), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
