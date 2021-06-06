@@ -35,9 +35,9 @@ public class LoyaltyService implements ILoyaltyService {
     }
 
     @Override
-    public Iterable<Loyalty> findAll(int page, int size) {
+    public Page<Loyalty> findAll(int page, int size) {
         PageRequest pageRequest = PageRequest.of(page, size);
         Page<Loyalty> loyalties = loyaltyRepository.findAll(pageRequest);
-        return loyalties.getContent();
+        return loyalties;
     }
 }

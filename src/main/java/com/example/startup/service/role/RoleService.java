@@ -3,6 +3,7 @@ package com.example.startup.service.role;
 import com.example.startup.model.entity.Role;
 import com.example.startup.repository.IRoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -33,7 +34,7 @@ public class RoleService implements IRoleService {
     }
 
     @Override
-    public Iterable<Role> findAll(int page, int size) {
+    public Page<Role> findAll(int page, int size) {
         return null;
     }
 

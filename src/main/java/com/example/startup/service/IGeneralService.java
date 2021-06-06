@@ -1,6 +1,6 @@
 package com.example.startup.service;
 
-import com.example.startup.model.entity.Debtor;
+import org.springframework.data.domain.Page;
 
 import java.util.Optional;
 
@@ -13,5 +13,5 @@ public interface IGeneralService<T> {
 
     void remove(Long id);
 
-    Iterable<T> findAll(int page, int size);
+    Page<T> findAll(int page, int size);
 }

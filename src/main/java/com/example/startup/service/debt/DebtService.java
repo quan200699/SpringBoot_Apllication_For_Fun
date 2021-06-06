@@ -35,9 +35,9 @@ public class DebtService implements IDebtService {
     }
 
     @Override
-    public Iterable<Debt> findAll(int page, int size) {
+    public Page<Debt> findAll(int page, int size) {
         PageRequest pageRequest = PageRequest.of(page, size);
         Page<Debt> debts = debtRepository.findAll(pageRequest);
-        return debts.getContent();
+        return debts;
     }
 }

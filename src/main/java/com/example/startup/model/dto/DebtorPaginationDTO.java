@@ -12,5 +12,7 @@ import java.util.List;
 public class DebtorPaginationDTO {
     private List<DebtorDto> debtorDtos;
 
-    private int length;
+    private long length;
+
+    private long totalPage;
 }

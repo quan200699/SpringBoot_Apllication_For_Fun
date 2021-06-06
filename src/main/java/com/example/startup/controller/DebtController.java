@@ -26,7 +26,7 @@ public class DebtController {
 
     @GetMapping
     public ResponseEntity<List<DebtDto>> getAllDebts(@RequestParam int page, @RequestParam int size) {
-        List<Debt> debtors = (List<Debt>) debtService.findAll(page, size);
+        List<Debt> debtors = debtService.findAll(page, size).getContent();
         List<DebtDto> debtDtos = debtors.stream().map(this::convertToDto).collect(Collectors.toList());
         return new ResponseEntity<>(debtDtos, HttpStatus.OK);
     }

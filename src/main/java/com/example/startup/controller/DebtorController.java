@@ -6,6 +6,7 @@ import com.example.startup.model.entity.Debtor;
 import com.example.startup.service.debtor.IDebtorService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,10 +28,12 @@ public class DebtorController {
 
     @GetMapping
     public ResponseEntity<DebtorPaginationDTO> getAllDebtors(@RequestParam int page, @RequestParam int size) {
-        List<Debtor> debtors = (List<Debtor>) debtorService.findAll(page, size);
+        Page<Debtor> debtorPage = debtorService.findAll(page, size);
+        List<Debtor> debtors = debtorPage.getContent();
         List<DebtorDto> debtorDtoList = debtors.stream().map(this::convertToDto).collect(Collectors.toList());
-        int length = ((List<Debtor>) debtorService.findAll()).size();
-        return new ResponseEntity<>(new DebtorPaginationDTO(debtorDtoList, length), HttpStatus.OK);
+        long length = debtorPage.getTotalElements();
+        long totalPage = debtorPage.getTotalPages();
+        return new ResponseEntity<>(new DebtorPaginationDTO(debtorDtoList, length, totalPage), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

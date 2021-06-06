@@ -38,10 +38,10 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public Iterable<User> findAll(int page, int size) {
+    public Page<User> findAll(int page, int size) {
         PageRequest pageRequest = PageRequest.of(page, size);
         Page<User> users = userRepository.findAll(pageRequest);
-        return users.getContent();
+        return users;
     }
 
     @Override
