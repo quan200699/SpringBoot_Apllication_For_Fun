@@ -15,10 +15,13 @@ public class Debtor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String name;
 
+    @Column(nullable = false)
     private String address;
 
+    @Column(nullable = false, columnDefinition = "varchar(10)")
     private String phone;
 
     private String hobbies;

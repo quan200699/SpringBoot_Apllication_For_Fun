@@ -12,6 +12,7 @@ public class Debt {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private Date createdDate;
 
     private Date confirmedDate;
@@ -19,7 +20,9 @@ public class Debt {
     private boolean status;
 
     @ManyToOne
+    @Column(nullable = false)
     private Debtor debtor;
 
+    @Column(nullable = false, columnDefinition = "bigint default 0")
     private Long amount;
 }
