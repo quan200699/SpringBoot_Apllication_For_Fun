@@ -1,6 +1,5 @@
 package com.example.startup.advice;
 
-import com.example.startup.exception.EmailUniqueException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
