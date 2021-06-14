@@ -1,5 +1,6 @@
 package com.example.startup.model.dto;
 
+import com.example.startup.exception.UniqueEmail;
 import com.example.startup.exception.UniqueUsername;
 import lombok.Data;
 
@@ -14,6 +15,7 @@ public class SignUpForm {
     @Size(min = 6, max = 20)
     private String username;
 
+    @UniqueEmail
     @NotNull
     @Email
     private String email;

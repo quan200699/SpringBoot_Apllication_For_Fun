@@ -1,7 +1,6 @@
 package com.example.startup.controller;
 
 import com.example.startup.enumeration.RoleName;
-import com.example.startup.exception.EmailUniqueException;
 import com.example.startup.exception.RePasswordNotCorrectException;
 import com.example.startup.model.dto.JwtResponse;
 import com.example.startup.model.dto.LoginForm;
@@ -25,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import java.util.Optional;
 
 @RestController
 @CrossOrigin("*")
@@ -56,11 +54,7 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<SignUpForm> register(@Valid @RequestBody SignUpForm signUpForm) throws EmailUniqueException, RePasswordNotCorrectException {
-        Optional<User> userOptional = userService.findByEmail(signUpForm.getEmail());
-        if (userOptional.isPresent()) {
-            throw new EmailUniqueException();
-        }
+    public ResponseEntity<SignUpForm> register(@Valid @RequestBody SignUpForm signUpForm) throws RePasswordNotCorrectException {
         if (!signUpForm.getPassword().equals(signUpForm.getRePassword())) {
             throw new RePasswordNotCorrectException();
         }

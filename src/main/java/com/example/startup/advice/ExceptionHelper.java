@@ -28,13 +28,4 @@ public class ExceptionHelper {
         });
         return errors;
     }
-
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(EmailUniqueException.class)
-    public Map<String, String> handleEmailUniqueException() {
-        Map<String, String> errors = new HashMap<>();
-        errors.put("error", "email đã tồn tại");
-        return errors;
-    }
-
 }
