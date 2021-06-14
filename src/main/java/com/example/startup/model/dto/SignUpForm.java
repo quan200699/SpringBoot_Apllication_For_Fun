@@ -1,5 +1,6 @@
 package com.example.startup.model.dto;
 
+import com.example.startup.exception.PasswordConfirm;
 import com.example.startup.exception.UniqueEmail;
 import com.example.startup.exception.UniqueUsername;
 import lombok.Data;
@@ -20,11 +21,6 @@ public class SignUpForm {
     @Email
     private String email;
 
-    @NotNull
-    @Size(min = 6, max = 30)
-    private String password;
-
-    @NotNull
-    @Size(min = 6, max = 30)
-    private String rePassword;
+    @PasswordConfirm
+    private PasswordForm passwordForm;
 }

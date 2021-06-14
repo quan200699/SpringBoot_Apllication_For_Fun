@@ -9,7 +9,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class DebtorPaginationDTO {
+public class DebtorPaginationDto {
     private List<DebtorDto> debtorDtos;
 
     private long length;

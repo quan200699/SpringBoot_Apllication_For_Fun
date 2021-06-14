@@ -1,7 +1,7 @@
 package com.example.startup.controller;
 
 import com.example.startup.model.dto.DebtorDto;
-import com.example.startup.model.dto.DebtorPaginationDTO;
+import com.example.startup.model.dto.DebtorPaginationDto;
 import com.example.startup.model.entity.Debtor;
 import com.example.startup.service.debtor.IDebtorService;
 import org.modelmapper.ModelMapper;
@@ -27,13 +27,13 @@ public class DebtorController {
     private ModelMapper modelMapper;
 
     @GetMapping
-    public ResponseEntity<DebtorPaginationDTO> getAllDebtors(@RequestParam int page, @RequestParam int size) {
+    public ResponseEntity<DebtorPaginationDto> getAllDebtors(@RequestParam int page, @RequestParam int size) {
         Page<Debtor> debtorPage = debtorService.findAll(page, size);
         List<Debtor> debtors = debtorPage.getContent();
         List<DebtorDto> debtorDtoList = debtors.stream().map(this::convertToDto).collect(Collectors.toList());
         long length = debtorPage.getTotalElements();
         long totalPage = debtorPage.getTotalPages();
-        return new ResponseEntity<>(new DebtorPaginationDTO(debtorDtoList, length, totalPage), HttpStatus.OK);
+        return new ResponseEntity<>(new DebtorPaginationDto(debtorDtoList, length, totalPage), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

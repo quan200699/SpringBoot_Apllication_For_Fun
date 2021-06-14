@@ -1,7 +1,6 @@
 package com.example.startup.controller;
 
 import com.example.startup.enumeration.RoleName;
-import com.example.startup.exception.RePasswordNotCorrectException;
 import com.example.startup.model.dto.JwtResponse;
 import com.example.startup.model.dto.LoginForm;
 import com.example.startup.model.dto.SignUpForm;
@@ -54,13 +53,10 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<SignUpForm> register(@Valid @RequestBody SignUpForm signUpForm) throws RePasswordNotCorrectException {
-        if (!signUpForm.getPassword().equals(signUpForm.getRePassword())) {
-            throw new RePasswordNotCorrectException();
-        }
+    public ResponseEntity<SignUpForm> register(@Valid @RequestBody SignUpForm signUpForm) {
         User user = new User();
         user.setUsername(signUpForm.getUsername());
-        user.setPassword(passwordEncoder.encode(signUpForm.getPassword()));
+        user.setPassword(passwordEncoder.encode(signUpForm.getPasswordForm().getPassword()));
         user.setEmail(signUpForm.getEmail());
         user.getRoles().add(new Role(2L, RoleName.ROLE_USER.toString()));
         userService.save(user);
