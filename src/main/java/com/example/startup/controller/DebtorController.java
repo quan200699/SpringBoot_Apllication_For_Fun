@@ -38,7 +38,7 @@ public class DebtorController {
 
     @GetMapping("/{id}")
     public ResponseEntity<DebtorDto> getDebtorById(@PathVariable Long id) {
-        Optional<Debtor> debtorOptional = debtorService.findById(id);
+        Optional<Debtor> debtorOptional = debtorService.findByUserId(id);
         return debtorOptional.map(debtor -> new ResponseEntity<>(convertToDto(debtor), HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 

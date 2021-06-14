@@ -6,4 +6,5 @@ import com.example.startup.service.IGeneralService;
 import java.util.Optional;
 
 public interface IDebtorService extends IGeneralService<Debtor> {
+    Optional<Debtor> findByUserId(Long id);
 }
