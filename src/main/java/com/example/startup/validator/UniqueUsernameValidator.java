@@ -1,6 +1,7 @@
-package com.example.startup.exception;
+package com.example.startup.validator;
 
 import com.example.startup.repository.IUserRepository;
+import com.example.startup.validator.annotated.UniqueUsername;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

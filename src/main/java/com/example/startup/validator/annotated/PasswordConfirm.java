@@ -1,4 +1,6 @@
-package com.example.startup.exception;
+package com.example.startup.validator.annotated;
+
+import com.example.startup.validator.PasswordConfirmValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;

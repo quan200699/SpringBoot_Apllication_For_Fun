@@ -1,4 +1,6 @@
-package com.example.startup.exception;
+package com.example.startup.validator.annotated;
+
+import com.example.startup.validator.UniqueEmailValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -9,9 +11,9 @@ import java.lang.annotation.Target;
 
 @Target({ElementType.FIELD, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = UniqueUsernameValidator.class)
-public @interface UniqueUsername {
-    String message() default "Username is existed";
+@Constraint(validatedBy = UniqueEmailValidator.class)
+public @interface UniqueEmail {
+    String message() default "Email is existed";
 
     Class<?>[] groups() default {};
 

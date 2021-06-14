@@ -1,6 +1,7 @@
-package com.example.startup.exception;
+package com.example.startup.validator;
 
 import com.example.startup.model.dto.PasswordForm;
+import com.example.startup.validator.annotated.PasswordConfirm;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

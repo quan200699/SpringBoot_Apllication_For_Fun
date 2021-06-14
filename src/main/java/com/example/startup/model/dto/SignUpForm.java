@@ -1,8 +1,8 @@
 package com.example.startup.model.dto;
 
-import com.example.startup.exception.PasswordConfirm;
-import com.example.startup.exception.UniqueEmail;
-import com.example.startup.exception.UniqueUsername;
+import com.example.startup.validator.annotated.PasswordConfirm;
+import com.example.startup.validator.annotated.UniqueEmail;
+import com.example.startup.validator.annotated.UniqueUsername;
 import lombok.Data;
 
 import javax.validation.constraints.Email;
