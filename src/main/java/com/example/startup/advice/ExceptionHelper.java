@@ -1,7 +1,6 @@
 package com.example.startup.advice;
 
 import com.example.startup.exception.EmailUniqueException;
-import com.example.startup.exception.UsernameUniqueException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -27,14 +26,6 @@ public class ExceptionHelper {
             String errorMessage = error.getDefaultMessage();
             errors.put(fieldName, errorMessage);
         });
-        return errors;
-    }
-
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(UsernameUniqueException.class)
-    public Map<String, String> handleUsernameUniqueException() {
-        Map<String, String> errors = new HashMap<>();
-        errors.put("error", "username đã tồn tại");
         return errors;
     }
 

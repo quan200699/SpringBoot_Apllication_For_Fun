@@ -3,7 +3,6 @@ package com.example.startup.controller;
 import com.example.startup.enumeration.RoleName;
 import com.example.startup.exception.EmailUniqueException;
 import com.example.startup.exception.RePasswordNotCorrectException;
-import com.example.startup.exception.UsernameUniqueException;
 import com.example.startup.model.dto.JwtResponse;
 import com.example.startup.model.dto.LoginForm;
 import com.example.startup.model.dto.SignUpForm;
@@ -57,12 +56,8 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<SignUpForm> register(@Valid @RequestBody SignUpForm signUpForm) throws UsernameUniqueException, EmailUniqueException, RePasswordNotCorrectException {
-        Optional<User> userOptional = userService.findByUsername(signUpForm.getUsername());
-        if (userOptional.isPresent()) {
-            throw new UsernameUniqueException();
-        }
-        userOptional = userService.findByEmail(signUpForm.getEmail());
+    public ResponseEntity<SignUpForm> register(@Valid @RequestBody SignUpForm signUpForm) throws EmailUniqueException, RePasswordNotCorrectException {
+        Optional<User> userOptional = userService.findByEmail(signUpForm.getEmail());
         if (userOptional.isPresent()) {
             throw new EmailUniqueException();
         }
