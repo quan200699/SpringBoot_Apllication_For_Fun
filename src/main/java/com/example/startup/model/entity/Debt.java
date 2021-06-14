@@ -20,7 +20,6 @@ public class Debt {
     private boolean status;
 
     @ManyToOne
-    @Column(nullable = false)
     private Debtor debtor;
 
     @Column(nullable = false, columnDefinition = "bigint default 0")

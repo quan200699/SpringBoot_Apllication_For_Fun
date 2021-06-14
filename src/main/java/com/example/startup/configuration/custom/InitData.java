@@ -59,6 +59,7 @@ public class InitData {
             Set<Role> roles = new HashSet<>();
             roles.add(new Role(1L, RoleName.ROLE_ADMIN.toString()));
             admin.setUsername("admin1");
+            admin.setEmail("admin@gmail.com");
             admin.setPassword(passwordEncoder.encode("123456"));
             admin.setRoles(roles);
             userService.save(admin);
