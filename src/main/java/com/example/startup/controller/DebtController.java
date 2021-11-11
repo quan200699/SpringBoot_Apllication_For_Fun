@@ -7,6 +7,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -24,6 +25,7 @@ public class DebtController {
     @Autowired
     private ModelMapper modelMapper;
 
+    @Secured({"ROLE_ADMIN", "ROLE_USER"})
     @GetMapping
     public ResponseEntity<List<DebtDto>> getAllDebts(@RequestParam int page, @RequestParam int size) {
         List<Debt> debtors = debtService.findAll(page, size).getContent();
@@ -37,6 +39,7 @@ public class DebtController {
         return debtOptional.map(debt -> new ResponseEntity<>(convertToDto(debt), HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    @Secured("ROLE_ADMIN")
     @PostMapping
     public ResponseEntity<DebtDto> createNewDebt(@Valid @RequestBody DebtDto debtDto) {
         Debt debt = convertToEntity(debtDto);
